@@ -9,7 +9,7 @@
 # configure
 use constant SOLR   => 'https://solr41prod.library.nd.edu:8443/solr/curate';
 use constant QUERY  => "*:*";
-use constant ROWS   => 5000;
+use constant ROWS   => 10000;
 use constant HEADER => "id\tcreator\ttitle\tmodel\n";
 
 # require
