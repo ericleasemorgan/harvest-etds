@@ -14,7 +14,7 @@ HOST='localhost'
 PORT=7890
 SERVER='./bin/etd-iid2gid.pl'
 SLEEP=5
-SQL='SELECT iid FROM etds ORDER BY iid LIMIT 1000;'
+SQL='SELECT iid FROM etds ORDER BY iid;'
 TRANSACTIONS='./caches/sql/etd-iid2gid.sql';
 
 # start the server and capture the process id

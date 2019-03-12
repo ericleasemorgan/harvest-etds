@@ -12,7 +12,7 @@
 DB='./etc/curate-nd.db'
 SQL="SELECT gid FROM etds WHERE gid LIKE 'und%' ORDER BY gid;"
 ROOT='https://curate.nd.edu/downloads'
-DOWNLOADS='./caches/pdf'
+DOWNLOADS='./pdf'
 ETDDOWNLOAD='./bin/etd-download.pl'
 
 # process each gid in the database
