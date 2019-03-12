@@ -3,7 +3,7 @@
 This suite of software -- Harvest ETDS -- is used to query the University of Notre Dame's institutional repository for electronic theses &amp; dissertations, cache the PDF files, and convert them into plain text for analysis. In a nutshell, this is how it works:
 
    * `./bin/db-create.sh` - create a rudimentary database (`./etc/curate-nd.db`) using `./etc/curate-nd.sql` as the schema
-   * `./bin/etd-harvest.pl &gt; ./caches/tsv/etd-harvest.tsv` - query the repository's Solr instance for ETDs, and cache the bibliographics to a TSV file
+   * `./bin/etd-harvest.pl > ./caches/tsv/etd-harvest.tsv` - query the repository's Solr instance for ETDs, and cache the bibliographics to a TSV file
    * `./bin/db-initialize.sh` - loop through the TSV file and fill up the database
    * `./bin/etd-iid2gid.sh` - given an item identifier, query the Solr instance and save the resulting generic item identifier to the database
    * `find pdf -name '*.pdf' | parallel ./bin/file2txt.sh {}` - convert the PDF files to plain text
