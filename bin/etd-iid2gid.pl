@@ -3,39 +3,39 @@
 # etd-iid2gid.pl - given an item id, output a generic file id
 
 # Eric Lease Morgan <emorgan@nd.edu>
-# March 11, 2019 - first investigations
+# March 12, 2019 - first investigations
 
 
 # configure
-use constant SOLR  => 'https://solr41prod.library.nd.edu:8443/solr/curate';
-use constant QUERY => 'is_part_of_ssim:info:fedora/';
+use constant SOLR     => 'https://solr41prod.library.nd.edu:8443/solr/curate';
+use constant QUERY    => 'identification_identity_mime_type_tesim:application/pdf AND is_part_of_ssim:info:fedora/';
+use constant HOST     => 'localhost';
+use constant PORT     => 7890;
+use constant PROTOCOL => 'tcp';
 
 # require
+use IO::Socket::INET;
 use strict;
 use WebService::Solr;
 
-# sanity check
-my $id = $ARGV[ 0 ];
-if ( ! $id ) { die "Usage: $0 <id>\n" }
-
-# configure environment
-binmode( STDOUT, ":utf8" );
-binmode( STDERR, ":utf8" );
-$| = 1;
-
 # initialize
-my $solr  = WebService::Solr->new( SOLR );
+my $socket = IO::Socket::INET->new( LocalHost => HOST, LocalPort => PORT, Proto => PROTOCOL, Listen => 1, Reuse => 1 ) or die "Can't create socket ($!)\n";
+my $solr   = WebService::Solr->new( SOLR );
 
-# build a query and do the search
-my $response = $solr->search( QUERY . $id );
+# listen, forever
+while ( my $client = $socket->accept() ) {
 
-# initialize results and loop through each document
-for my $doc ( $response->docs ) {
+	# get the input, build the query, and search
+	my $iid      = <$client>;	
+	my $query    = QUERY . $iid;
+	my $response = $solr->search( $query );
 	
-	# parse
-	my $gid = $doc->value_for( 'id' );
-	$gid =~ s/.*://g;
-	print "$gid";
-		
-}
+	# get the (first) document, and output the generic file id
+	for my $doc ( $response->docs ) {
+	
+		print $client $doc->value_for( 'id' );
+		last;
+	
+	}
 
+}
