@@ -14,6 +14,7 @@
 ./bin/db-initialize.sh
 ./bin/etd-iid2gid.sh
 ./bin/etd-download.sh
+find pdf -name '*.pdf' | parallel ./bin/file2txt.sh {}
 
 # done
 exit
