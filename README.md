@@ -10,7 +10,7 @@ This suite of software -- Harvest ETDS -- is used to query the University of Not
    
 There is one script to rule them all -- `./bin/etd-make.sh` -- but I'm sure your mileage will vary.
 
-This has been "an adventure in Hydra", to say the least!
+This has been "an adventure in Hydra", to say the least!!
 
 ---
 Eric Lease Morgan &lt;emorgan@nd.edu&gt;   
