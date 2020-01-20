@@ -28,13 +28,19 @@ while read RECORD; do
 	TITLE=${FIELDS[3]}
 	DATE=${FIELDS[4]}
 	DEPARTMENT=${FIELDS[5]}
+	ABSTRACT=${FIELDS[6]}
 
 	TITLE="${TITLE//\'/''}"
 	CREATOR="${CREATOR//\'/''}"
+	ABSTRACT=$( echo $ABSTRACT | sed "s/\r//g" )
+	ABSTRACT=$( echo $ABSTRACT | sed "s/\n/ /g" )
+	ABSTRACT=$( echo $ABSTRACT | sed "s/ +/ /g" )
+	ABSTRACT=$( echo $ABSTRACT | sed "s/'/''/g" )
 		
 	# re-initialize, debug, and update
-	SQL="INSERT INTO etds ( 'iid', 'model', 'creator', 'title', 'date', 'department' ) VALUES ( '$IID', '$MODEL', '$CREATOR', '$TITLE', '$DATE', '$DEPARTMENT' );"
+	SQL="INSERT INTO etds ( 'iid', 'model', 'creator', 'title', 'date', 'department', 'abstract' ) VALUES ( '$IID', '$MODEL', '$CREATOR', '$TITLE', '$DATE', '$DEPARTMENT', '$ABSTRACT' );"
 	echo $SQL >&2
+	echo      >&2
 	echo $SQL >> $TRANSACTIONS
 	
 done < $TSV

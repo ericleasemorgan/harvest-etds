@@ -12,7 +12,7 @@
 # configure
 use constant SOLR   => 'https://solr41prod.library.nd.edu:8443/solr/curate';
 use constant QUERY  => '*:* AND active_fedora_model_ssi:Etd';
-use constant ROWS   => 4000;
+use constant ROWS   => 6000;
 use constant HEADER => "iid\tmodel\tcreator\ttitle\tdate\tdepartment\n";
 
 # require
@@ -44,6 +44,15 @@ for my $doc ( $response->docs ) {
 	my $department =  $doc->value_for ( 'desc_metadata__administrative_unit_tesim' );
 	my $model      =  $doc->value_for ( 'active_fedora_model_ssi' );
 	my $title      =  $doc->value_for ( 'desc_metadata__title_tesim' );
+	my $abstract   =  $doc->value_for ( 'desc_metadata__abstract_tesim' );
+	
+	if ( $date eq '' ) { $date = '1904-01-01' }	
+	if ( $department eq '' ) { $department = 'University of Notre Dame' }	
+
+	$abstract =~ s/\r//g;
+	$abstract =~ s/\n/ /g;
+	$abstract =~ s/\t/ /g;
+	$abstract =~ s/ +/ /g;
 	
 	# debug
 	warn "     item id: $iid\n";
@@ -52,10 +61,11 @@ for my $doc ( $response->docs ) {
 	warn "       title: $title\n";
 	warn "        date: $date\n";
 	warn "  department: $department\n";
+	warn "    abstract: $abstract\n";
 	warn "\n";	
 	
 	# update results
-	print join( "\t", ( $iid, $model, $creators[ 0 ], $title, $date, $department ) ), "\n";
+	print join( "\t", ( $iid, $model, $creators[ 0 ], $title, $date, $department, $abstract ) ), "\n";
 	
 }
 
