@@ -3,7 +3,8 @@
 -- Eric Lease Morgan (emorgan@nd.edu)
 -- (c) University of Notre Dame; distributed under a GNU Public License
 
--- March 11, 2019 - first cut
+-- March   11, 2019 - first cut
+-- January 20, 2020 - added contributors and subjects; Martin Luther King Day
 
 
 CREATE table etds (
@@ -17,3 +18,16 @@ CREATE table etds (
   abstract   TEXT,
   gid        TEXT
 );
+
+
+CREATE table contributors (
+  iid          TEXT,
+  contributor  TEXT
+);
+
+
+CREATE table subjects (
+  iid      TEXT,
+  subject  TEXT
+);
+
