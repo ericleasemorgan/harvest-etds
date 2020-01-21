@@ -7,7 +7,7 @@
 
 
 # configure
-use constant FACETFIELD => ( 'facet_type' );
+use constant FACETFIELD => ( 'facet_subject', 'facet_contributor' );
 use constant SOLR       => 'http://localhost:8983/solr/etds';
 use constant TXT        => './txt';
 use constant PDF        => './pdf';
@@ -30,12 +30,23 @@ my $prefix = PREFIX;
 
 # build the search options
 my %search_options = ();
-#$search_options{ 'facet.field' } = [ FACETFIELD ];
-#$search_options{ 'facet' }       = 'true';
+$search_options{ 'facet.field' } = [ FACETFIELD ];
+$search_options{ 'facet' }       = 'true';
 $search_options{ 'rows' }        = ROWS;
 
 # search
 my $response = $solr->search( "$query", \%search_options );
+
+# build a list of subject facets
+my @facet_subject = ();
+my $subject_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_subject } );
+foreach my $facet ( sort { $$subject_facets{ $b } <=> $$subject_facets{ $a } } keys %$subject_facets ) { push @facet_subject, $facet . ' (' . $$subject_facets{ $facet } . ')'; }
+
+# build a list of contributor facets
+my @facet_contributor = ();
+my $contributor_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_contributor } );
+foreach my $facet ( sort { $$contributor_facets{ $b } <=> $$contributor_facets{ $a } } keys %$contributor_facets ) { push @facet_contributor, $facet . ' (' . $$contributor_facets{ $facet } . ')'; }
+
 
 # get the total number of hits
 my $total = $response->content->{ 'response' }->{ 'numFound' };
@@ -45,17 +56,22 @@ my @hits = $response->docs;
 
 # start the (human-readable) output
 print "Your search found $total item(s) and " . scalar( @hits ) . " item(s) are displayed.\n\n";
+print '      subject facets: ', join( '; ', @facet_subject ), "\n\n";
+print '  contributor facets: ', join( '; ', @facet_contributor ), "\n\n";
 
 # loop through each document
 for my $doc ( $response->docs ) {
 
 	# parse
-	my $iid      = $doc->value_for( 'iid' );
-	my $gid      = $doc->value_for( 'gid' );
-	my $creator  = $doc->value_for( 'creator' );
-	my $title    = $doc->value_for( 'title' );
-	my $date     = $doc->value_for( 'date' );
-	my $abstract = $doc->value_for( 'abstract' );
+	my $iid          = $doc->value_for(  'iid' );
+	my $gid          = $doc->value_for(  'gid' );
+	my $creator      = $doc->value_for(  'creator' );
+	my $title        = $doc->value_for(  'title' );
+	my $date         = $doc->value_for(  'date' );
+	my $abstract     = $doc->value_for(  'abstract' );
+	my $department   = $doc->value_for(  'department' );
+	my @contributors = $doc->values_for( 'contributor' );
+	my @subjects     = $doc->values_for( 'subject' );
 	
 	# create (and hack) cached file names
 	my $plaintext   =  "$txt/$gid.txt";
@@ -64,14 +80,17 @@ for my $doc ( $response->docs ) {
 	$pdfdocument    =~ s/$prefix//e;
 	
 	# output
-	print "     creator: $creator\n";
-	print "       title: $title\n";
-	print "        date: $date\n";
-	print "    abstract: $abstract\n";
-	print "         iid: $iid\n";
-	print "         gid: $gid\n";
-	print "  plain text: $plaintext\n";
-	print "         PDF: $pdfdocument\n";
+	print "         creator: $creator\n";
+	print "           title: $title\n";
+	print "            date: $date\n";
+	print "      department: $department\n";
+	print "  contributor(s): " . join( '; ', @contributors ) . "\n";
+	print "     subjects(s): " . join( '; ', @subjects ) . "\n";
+	print "        abstract: $abstract\n";
+	print "             iid: $iid\n";
+	print "             gid: $gid\n";
+	print "      plain text: $plaintext\n";
+	print "             PDF: $pdfdocument\n";
 	print "\n";
 	
 }
