@@ -39,7 +39,6 @@ while read RECORD; do
 
 	TITLE="${TITLE//\'/''}"
 	CREATOR="${CREATOR//\'/''}"
-	ABSTRACT=$( echo $ABSTRACT | sed "s/\r//g" )
 	ABSTRACT=$( echo $ABSTRACT | sed "s/\n/ /g" )
 	ABSTRACT=$( echo $ABSTRACT | sed "s/ +/ /g" )
 	ABSTRACT=$( echo $ABSTRACT | sed "s/'/''/g" )
