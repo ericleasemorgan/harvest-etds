@@ -1,5 +1,4 @@
 BEGIN TRANSACTION;
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'iid', 'contributors' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:00000001r2s', 'Steven Boker' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:00000001r2s', 'Cindy Bergeman' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:00000001r2s', 'Scott Maxwell' );
@@ -63,6 +62,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v85263', 'J
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v85263', 'Daniel K. Lapsley' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v85263', 'Dawn M. Gondoli' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v85263', 'E. Mark Cummings' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v85294', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:02870v8534q', 'Ann Marie Conrado' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:05741r68945', 'Terri Weissman' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:05741r68945', 'Richard Gray' );
@@ -135,6 +135,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:08612n51m8d', 'M
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:08612n51m8d', 'Howard A. Blackstead' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:08612n51m8d', 'Paul J. McGinn' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:08612n51m8d', 'Bruce Bunker' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:08612n51n19', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:0c483j34v42', 'W. Martin Bloomer' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:0c483j34v42', 'Christopher Baron' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:0c483j34v42', 'Catherine Schlegel' );
@@ -669,6 +670,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1z40ks67c78', 'J
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1z40ks67c78', 'John Betz' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1z40ks67c78', 'Cyril J. O''Regan' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1z40ks67c78', 'Mary Catherine Hilkert' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1z40ks67c8m', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:2227mp50k7h', 'Dean Zimmerman' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:2227mp50k7h', 'Michael Rea' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:2227mp50k7h', 'Meghan Sullivan' );
@@ -1442,6 +1444,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:47429882s5v', 'M
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:47429882s5v', 'Stanislav Gordeyev' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:47429882s5v', 'Scott C. Morris' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:47429882s5v', 'Eric J. Jumper' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:47429882t1s', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4b29b56616h', 'Dr. W. Philip Kegelmeyer' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4b29b56616h', 'Dr. Patrick J. Flynn' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4b29b56616h', 'Dr. Nitesh V. Chawla' );
@@ -1547,6 +1550,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15w07', 'J
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15x1w', 'Catherine Zuckert' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15x27', 'X. Sharon Hu' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15x27', 'Danny Z. Chen' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15w69', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15w9b', 'Ke-Hai Yuan' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15w9b', 'Guanjian Zhang' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:4m90dv15w9b', 'Scott E. Maxwell' );
@@ -4240,6 +4244,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n65', 'M
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n65', 'David F. Ruccio' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n65', 'Kwan S. Kim' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n65', 'James J. Rakowski' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n5t', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n34', 'Patrick J. Flynn' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n34', 'Surendar Chandra' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:f1881j94n34', 'Danny Z. Chen' );
@@ -4673,6 +4678,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47791b', 'C
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47791b', 'Michael Zuckert' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47791b', 'David Solomon' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47791b', 'Mary Keys' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47792p', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47797d', 'Olaf G. Wiest' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47797d', 'Anthony S. Serianni' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gb19f47797d', 'Haifeng Gao' );
@@ -4850,6 +4856,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6069v', 'P
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6069v', 'Professor George A. Lopez' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6069v', 'Professor Keir Lieber ' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6069v', 'Professor Sebastian Rosato' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc60702', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6068h', 'E. Mark Cummings' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6068h', 'Scott Monroe' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:h128nc6068h', 'Scott Maxwell' );
@@ -5339,6 +5346,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09d6s', 'T
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09d6s', 'Alvin Plantinga' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09d6s', 'Michael Loux' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09d6s', 'Leopold Stubenberg' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09f1c', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09f4d', 'Amanda Hummon' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09f94', 'Bertrand Hochwald' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:jh343r09g0b', 'Matthew Wilkens' );
@@ -5702,12 +5710,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn42747', 'E
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4272j', 'Dr. Marvin J. Miller' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4272j', 'Dr. Brandon L. Ashfeld' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4272j', 'Dr. Richard E. Taylor' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'Peruvian army' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'nation and nationalism' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'military culture' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'race and gender in Peru' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'military rituals' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'Cold War in Latin America' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn4275k', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn42805', 'Nitesh Chawla' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn42805', 'Jessica Hellmann' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kh04dn42805', 'Jason McLachlan' );
@@ -5780,11 +5783,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08r8p', 'I
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s38', 'Patrick Deneen' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s38', 'Phillip Munoz' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s38', 'Michael Zuckert' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'classical literature' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'Liber epigrammatum' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'Augustine of Hippo' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'Prosper of Aquitaine' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'theology' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08s7n', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08t6m', 'Susan K Fullerton Shirey' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:kp78gf08t27', 'Joyelle McSweeney' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:ks65h99212n', 'Joseph P. Kaboski' );
@@ -6846,7 +6845,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x2475b', 'S
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x24740', 'Sidney D''Mello' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x24740', 'Bradley Gibson' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x24740', 'James Brockmole' );
-INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x24771', 'Mathematics' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:nz805x24771', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:p2676t07f53', 'Jonathan Schaffer' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:p2676t07f53', 'Samuel Newlands' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:p2676t07f53', 'Michael Rea' );
@@ -10589,6 +10588,7 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gm80ht2740r', 'K
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gm80ht2740r', 'Robert L. Stevenson' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gm80ht2740r', 'Gregory Madey' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gh93gx44049', 'Scott C. Morris' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gq67jq10d3m', 'none' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gt54kk93n4x', 'George Howard' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gt54kk93n4x', 'Alexandra Corning' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:gt54kk93n4x', 'Dawn M. Gondoli' );
@@ -13013,4 +13013,21 @@ INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:d791sf28c74', 'P
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1r66j100t23', 'Cyril ORegan' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1r66j100t23', 'Lawrence Cunningham' );
 INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:1r66j100t23', 'John Betz' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b2773t9785z', 'Panos Antsaklis' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b2773t9785z', 'Ketan Savla' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b2773t9785z', 'Vijay Gupta' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b2773t9785z', 'Calin Belta' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b5644q80j6v', 'Yahya Kurama' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b5644q80j6v', 'Joannes Westerink' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b5644q80j6v', 'Ted Zoli' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:b5644q80j6v', 'Ashley P. Thrall' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:ft848p61w3t', 'Stephan A. Stolz' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:d504rj4646b', 'Paul W. Huber' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:d504rj4646b', 'Holly V. Goodson' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:d504rj4646b', 'Francis J. Castellino' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:d504rj4646b', 'Shaun W. Lee' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:zg64th87513', 'Casey P. O''Brien' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:zg64th87513', 'William F. Schneider' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:zg64th87513', 'Thomas F. Degnan' );
+INSERT INTO contributors ( 'iid', 'contributor' ) VALUES ( 'und:zg64th87513', 'Jason C. Hicks' );
 END TRANSACTION;

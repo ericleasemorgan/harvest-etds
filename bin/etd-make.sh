@@ -13,6 +13,7 @@
 ./bin/etd-harvest.pl > ./caches/tsv/etd-harvest.tsv
 ./bin/db-initialize.sh
 ./bin/etd-iid2gid.sh
+exit
 ./bin/etd-download.sh
 find pdf -name '*.pdf' | parallel ./bin/file2txt.sh {}
 

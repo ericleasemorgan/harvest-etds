@@ -23,7 +23,11 @@ echo "BEGIN TRANSACTION;" > $CONTRIBUTOR
 echo "BEGIN TRANSACTION;" > $SUBJECT
 
 # Process each record in the tsv file
+I=0
 while read RECORD; do
+
+	let "I=I+1"
+	if [[ $I == 1 ]]; then continue; fi
 
 	# parse
 	FIELDS=($RECORD)
@@ -32,10 +36,12 @@ while read RECORD; do
 	CREATOR=${FIELDS[2]}
 	TITLE=${FIELDS[3]}
 	DATE=${FIELDS[4]}
-	DEPARTMENT=${FIELDS[5]}
+	COLLEGE=${FIELDS[5]}
 	ABSTRACT=${FIELDS[6]}
 	CONTRIBURTORS=${FIELDS[7]}
 	SUBJECTS=${FIELDS[8]}
+	DEGREE=${FIELDS[9]}
+	DISCIPLINE=${FIELDS[10]}
 
 	TITLE="${TITLE//\'/''}"
 	CREATOR="${CREATOR//\'/''}"
@@ -44,7 +50,7 @@ while read RECORD; do
 	ABSTRACT=$( echo $ABSTRACT | sed "s/'/''/g" )
 		
 	# bibliographics; re-initialize, debug, and update
-	SQL="INSERT INTO etds ( 'iid', 'model', 'creator', 'title', 'date', 'department', 'abstract' ) VALUES ( '$IID', '$MODEL', '$CREATOR', '$TITLE', '$DATE', '$DEPARTMENT', '$ABSTRACT' );"
+	SQL="INSERT INTO etds ( 'iid', 'model', 'creator', 'title', 'date', 'college', 'abstract', 'degree', 'discipline' ) VALUES ( '$IID', '$MODEL', '$CREATOR', '$TITLE', '$DATE', '$COLLEGE', '$ABSTRACT', '$DEGREE', '$DISCIPLINE' );"
 	echo $SQL >&2
 	echo      >&2
 	echo $SQL >> $TRANSACTIONS
