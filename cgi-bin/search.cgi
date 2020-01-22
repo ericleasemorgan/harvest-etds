@@ -7,7 +7,7 @@
 
 
 # configure
-use constant FACETFIELD => ( 'facet_subject', 'facet_contributor' );
+use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline' );
 use constant SOLR       => 'http://localhost:8983/solr/etds';
 use constant TXT        => 'txt';
 use constant PDF        => 'pdf';
@@ -84,6 +84,28 @@ else {
 		
 	}
 
+	# build a list of degree facets
+	my @facet_degree = ();
+	my $degree_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_degree } );
+	foreach my $facet ( sort { $$degree_facets{ $b } <=> $$degree_facets{ $a } } keys %$degree_facets ) {
+	
+		my $encoded = uri_encode( $facet );
+		my $link = qq(<a href='/etds/cgi-bin/search.cgi?query=$sanitized AND degree:"$encoded"'>$facet</a>);
+		push @facet_degree, $link . ' (' . $$degree_facets{ $facet } . ')';
+		
+	}
+
+	# build a list of discipline facets
+	my @facet_discipline = ();
+	my $discipline_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_discipline } );
+	foreach my $facet ( sort { $$discipline_facets{ $b } <=> $$discipline_facets{ $a } } keys %$discipline_facets ) {
+	
+		my $encoded = uri_encode( $facet );
+		my $link = qq(<a href='/etds/cgi-bin/search.cgi?query=$sanitized AND discipline:"$encoded"'>$facet</a>);
+		push @facet_discipline, $link . ' (' . $$discipline_facets{ $facet } . ')';
+		
+	}
+
 	# get the total number of hits
 	my $total = $response->content->{ 'response' }->{ 'numFound' };
 
@@ -100,6 +122,8 @@ else {
 		my $title        = $doc->value_for(  'title' );
 		my $date         = $doc->value_for(  'date' );
 		my $abstract     = $doc->value_for(  'abstract' );
+		my $degree       = $doc->value_for(  'degree' );
+		my $discipline   = $doc->value_for(  'discipline' );
 		my $department   = $doc->value_for(  'department' );
 		
 		# update the list of dids
@@ -142,9 +166,12 @@ else {
 		$pdfurl    =~ s/$prefix//;
 		
 		# create a item
-		my $item = &item( $title, $creator, $date, scalar( @subjects ), scalar( @contributors ), $txturl, $pdfurl );
+		my $item = &item( $title, $creator, $date, scalar( @subjects ), scalar( @contributors ), $txturl, $pdfurl, $degree, $discipline );
 		$item =~ s/##TITLE##/$title/g;
 		$item =~ s/##CREATOR##/$creator/eg;
+		$item =~ s/##DATE##/$date/eg;
+		$item =~ s/##DISCIPLINE##/$discipline/eg;
+		$item =~ s/##DEGREE##/$degree/eg;
 		$item =~ s/##DATE##/$date/eg;
 		$item =~ s/##SUBJECTS##/$subjects/eg;
 		$item =~ s/##CONTRIBUTORS##/$contributors/eg;
@@ -158,7 +185,7 @@ else {
 	}	
 
 	my $gid2urls = &ids2urls;
-	$gid2urls    =~ s/##IDS##/join( ' ', @gids )/e;
+	$gid2urls    =~ s/##IDS##/join( ' ', @gids )/ge;
 
 	# build the html
 	$html =  &results_template;
@@ -169,6 +196,8 @@ else {
 	$html =~ s/##HITS##/scalar( @hits )/e;
 	$html =~ s/##FACETSSUBJECT##/join( '; ', @facet_subject )/e;
 	$html =~ s/##FACETSCONTRIBUTOR##/join( '; ', @facet_contributor )/e;
+	$html =~ s/##FACETSDEGREE##/join( '; ', @facet_degree )/e;
+	$html =~ s/##FACETSDISCIPLINE##/join( '; ', @facet_discipline )/e;
 	$html =~ s/##ITEMS##/$items/e;
 
 }
@@ -222,8 +251,12 @@ sub item {
 	my $contributors    = shift;
 	my $txturl          = shift;
 	my $pdfurl          = shift;
-	my $item      = "<li class='item'><a href='##FILE##'>##TITLE##</a><ul>";
+	my $degree          = shift;
+	my $discipline      = shift;
+	my $item            = "<li class='item'><span class='title'>##TITLE##</span><ul>";
 	if ( $author )       { $item .= "<li style='list-style-type:circle'><b>author:</b> ##CREATOR##</li>" }
+	if ( $degree )       { $item .= "<li style='list-style-type:circle'><b>degree:</b> ##DEGREE##</li>" }
+	if ( $discipline )   { $item .= "<li style='list-style-type:circle'><b>discipline:</b> ##DISCIPLINE##</li>" }
 	if ( $date )         { $item .= "<li style='list-style-type:circle'><b>date:</b> ##DATE##</li>" }
 	if ( $subjects )     { $item .= "<li style='list-style-type:circle'><b>subject(s):</b> ##SUBJECTS##</li>" }
 	if ( $contributors ) { $item .= "<li style='list-style-type:circle'><b>contributor(s):</b> ##CONTRIBUTORS##</li>" }
@@ -300,6 +333,7 @@ sub results_template {
 	<link rel="stylesheet" href="/etds/etc/style.css">
 	<style>
 		.item { margin-bottom: 1em }
+		.title { font-size: large }
 	</style>
 </head>
 <body>
@@ -326,8 +360,10 @@ sub results_template {
 	</div>
 	
 	<div class="col-3 col-m-3">
-	<h3>Contributor facets</h3><p>##FACETSCONTRIBUTOR##</p>
+	<h3>Discipline facets</h3><p>##FACETSDISCIPLINE##</p>
+	<h3>Degree facets</h3><p>##FACETSDEGREE##</p>
 	<h3>Subject facets</h3><p>##FACETSSUBJECT##</p>
+	<h3>Contributor facets</h3><p>##FACETSCONTRIBUTOR##</p>
 	</div>
 
 </body>
@@ -339,7 +375,7 @@ EOF
 sub ids2urls {
 
 	return <<EOF
-(<a href="/etds/cgi-bin/gids2urls.cgi?gids=##IDS##">List URLs</a>)
+(<a href="/etds/cgi-bin/gids2urls.cgi?type=txt&gids=##IDS##">List URLs to available plain text files</a> <a href="/etds/cgi-bin/gids2urls.cgi?type=pdf&gids=##IDS##">List URLs to available PDF versions</a> )
 EOF
 
 }

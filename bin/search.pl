@@ -7,7 +7,7 @@
 
 
 # configure
-use constant FACETFIELD => ( 'facet_subject', 'facet_contributor' );
+use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline' );
 use constant SOLR       => 'http://localhost:8983/solr/etds';
 use constant TXT        => './txt';
 use constant PDF        => './pdf';
@@ -47,6 +47,16 @@ my @facet_contributor = ();
 my $contributor_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_contributor } );
 foreach my $facet ( sort { $$contributor_facets{ $b } <=> $$contributor_facets{ $a } } keys %$contributor_facets ) { push @facet_contributor, $facet . ' (' . $$contributor_facets{ $facet } . ')'; }
 
+# build a list of discipline facets
+my @facet_discipline = ();
+my $discipline_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_discipline } );
+foreach my $facet ( sort { $$discipline_facets{ $b } <=> $$discipline_facets{ $a } } keys %$discipline_facets ) { push @facet_discipline, $facet . ' (' . $$discipline_facets{ $facet } . ')'; }
+
+# build a list of degree facets
+my @facet_degree = ();
+my $degree_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_degree } );
+foreach my $facet ( sort { $$degree_facets{ $b } <=> $$degree_facets{ $a } } keys %$degree_facets ) { push @facet_degree, $facet . ' (' . $$degree_facets{ $facet } . ')'; }
+
 
 # get the total number of hits
 my $total = $response->content->{ 'response' }->{ 'numFound' };
@@ -58,6 +68,8 @@ my @hits = $response->docs;
 print "Your search found $total item(s) and " . scalar( @hits ) . " item(s) are displayed.\n\n";
 print '      subject facets: ', join( '; ', @facet_subject ), "\n\n";
 print '  contributor facets: ', join( '; ', @facet_contributor ), "\n\n";
+print '       degree facets: ', join( '; ', @facet_degree ), "\n\n";
+print '   discipline facets: ', join( '; ', @facet_discipline ), "\n\n";
 
 # loop through each document
 for my $doc ( $response->docs ) {
@@ -69,7 +81,9 @@ for my $doc ( $response->docs ) {
 	my $title        = $doc->value_for(  'title' );
 	my $date         = $doc->value_for(  'date' );
 	my $abstract     = $doc->value_for(  'abstract' );
-	my $department   = $doc->value_for(  'department' );
+	my $college      = $doc->value_for(  'college' );
+	my $degree       = $doc->value_for(  'degree' );
+	my $discipline   = $doc->value_for(  'discipline' );
 	my @contributors = $doc->values_for( 'contributor' );
 	my @subjects     = $doc->values_for( 'subject' );
 	
@@ -83,7 +97,9 @@ for my $doc ( $response->docs ) {
 	print "         creator: $creator\n";
 	print "           title: $title\n";
 	print "            date: $date\n";
-	print "      department: $department\n";
+	print "         college: $college\n";
+	print "          degree: $degree\n";
+	print "      discipline: $discipline\n";
 	print "  contributor(s): " . join( '; ', @contributors ) . "\n";
 	print "     subjects(s): " . join( '; ', @subjects ) . "\n";
 	print "        abstract: $abstract\n";
