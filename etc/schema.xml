@@ -31,14 +31,18 @@
   <field name="contributor"        type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="creator"            type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
   <field name="date"               type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
-  <field name="department"         type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
+  <field name="college"            type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
   <field name="facet_subject"      type="string"        multiValued="true"   indexed="true"   stored="true"  />
   <field name="facet_contributor"  type="string"        multiValued="true"   indexed="true"   stored="true"  />
+  <field name="facet_degree"       type="string"        multiValued="false"  indexed="true"   stored="true"  />
+  <field name="facet_discipline"   type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="fulltext"           type="text_general"  multiValued="false"  indexed="true"   stored="false"  />
   <field name="gid"                type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="iid"                type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="subject"            type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="title"              type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
+  <field name="discipline"         type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
+  <field name="degree"             type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
   
   <!-- cool field -->
   <copyField source="*" dest="_text_"/>
