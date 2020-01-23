@@ -7,7 +7,7 @@
 
 
 # configure
-use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline' );
+use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline', 'year', 'availability', 'facet_college' );
 use constant SOLR       => 'http://localhost:8983/solr/etds';
 use constant TXT        => './txt';
 use constant PDF        => './pdf';
@@ -57,6 +57,21 @@ my @facet_degree = ();
 my $degree_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_degree } );
 foreach my $facet ( sort { $$degree_facets{ $b } <=> $$degree_facets{ $a } } keys %$degree_facets ) { push @facet_degree, $facet . ' (' . $$degree_facets{ $facet } . ')'; }
 
+# build a list of degree facets
+my @facet_year = ();
+my $year_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ year } );
+foreach my $facet ( sort { $$year_facets{ $b } <=> $$year_facets{ $a } } keys %$year_facets ) { push @facet_year, $facet . ' (' . $$year_facets{ $facet } . ')'; }
+
+# build a list of availability facets
+my @facet_availability = ();
+my $availability_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ availability } );
+foreach my $facet ( sort { $$availability_facets{ $b } <=> $$availability_facets{ $a } } keys %$availability_facets ) { push @facet_availability, $facet . ' (' . $$availability_facets{ $facet } . ')'; }
+
+# build a list of colleges facets
+my @facet_college = ();
+my $college_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_college } );
+foreach my $facet ( sort { $$college_facets{ $b } <=> $$college_facets{ $a } } keys %$college_facets ) { push @facet_college, $facet . ' (' . $$college_facets{ $facet } . ')'; }
+
 
 # get the total number of hits
 my $total = $response->content->{ 'response' }->{ 'numFound' };
@@ -66,10 +81,13 @@ my @hits = $response->docs;
 
 # start the (human-readable) output
 print "Your search found $total item(s) and " . scalar( @hits ) . " item(s) are displayed.\n\n";
-print '      subject facets: ', join( '; ', @facet_subject ), "\n\n";
-print '  contributor facets: ', join( '; ', @facet_contributor ), "\n\n";
-print '       degree facets: ', join( '; ', @facet_degree ), "\n\n";
-print '   discipline facets: ', join( '; ', @facet_discipline ), "\n\n";
+print '       subject facets: ', join( '; ', @facet_subject ), "\n\n";
+print '   contributor facets: ', join( '; ', @facet_contributor ), "\n\n";
+print '        degree facets: ', join( '; ', @facet_degree ), "\n\n";
+print '    discipline facets: ', join( '; ', @facet_discipline ), "\n\n";
+print '          year facets: ', join( '; ', @facet_year ), "\n\n";
+print '  availability facets: ', join( '; ', @facet_availability ), "\n\n";
+print '       college facets: ', join( '; ', @facet_college ), "\n\n";
 
 # loop through each document
 for my $doc ( $response->docs ) {

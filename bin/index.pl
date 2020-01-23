@@ -40,19 +40,22 @@ my $i = 0;
 while( my $document = $handle->fetchrow_hashref ) {
 			
 	# parse
-	my $iid        = $$document{ 'iid' };
-	my $gid        = $$document{ 'gid' };
-	my $creator    = $$document{ 'creator' };
-	my $title      = $$document{ 'title' };
-	my $date       = $$document{ 'date' };
-	my $abstract   = $$document{ 'abstract' };
-	my $college    = $$document{ 'college' };
-	my $degree     = $$document{ 'degree' };
-	my $discipline = $$document{ 'discipline' };
+	my $iid          = $$document{ 'iid' };
+	my $gid          = $$document{ 'gid' };
+	my $creator      = $$document{ 'creator' };
+	my $title        = $$document{ 'title' };
+	my $date         = $$document{ 'date' };
+	my $abstract     = $$document{ 'abstract' };
+	my $college      = $$document{ 'college' };
+	my $degree       = $$document{ 'degree' };
+	my $discipline   = $$document{ 'discipline' };
+	my $year         = $$document{ 'year' };
+	my $availability = $$document{ 'availability' };
 	
 	# remove bogus records; bogus in and of itself
 	next if ( $iid eq 'iid' );
 	next if ( ! $gid );
+	next if ( ! $availability );
 	
 	# normalize abstract
 	$abstract =~ s/\r/ /g;
@@ -94,32 +97,37 @@ while( my $document = $handle->fetchrow_hashref ) {
 	warn "         creator: $creator\n";
 	warn "           title: $title\n";
 	warn "            date: $date\n";
+	warn "            year: $year\n";
 	warn "      subject(s): " . join( '; ', @subjects ) . "\n";
 	warn "  contributor(s): " . join( '; ', @contributors ) . "\n";
 	warn "         college: $college\n";
 	warn "        abstract: $abstract\n";
 	warn "          degree: $degree\n";
 	warn "      discipline: $discipline\n";
+	warn "    availability: $availability\n";
 	warn "       full text: " . length( $fulltext ) . "\n";
 	warn "\n";
 		
 	# initialize Solr data
-	my $solr_abstract         = WebService::Solr::Field->new( 'abstract'         => $abstract );
-	my $solr_college          = WebService::Solr::Field->new( 'college'          => $college );
-	my $solr_creator          = WebService::Solr::Field->new( 'creator'          => $creator );
-	my $solr_date             = WebService::Solr::Field->new( 'date'             => $date );
-	my $solr_degree           = WebService::Solr::Field->new( 'degree'           => $degree );
-	my $solr_discipline       = WebService::Solr::Field->new( 'discipline'       => $discipline );
-	my $solr_facet_degree     = WebService::Solr::Field->new( 'facet_degree'     => $degree );
-	my $solr_facet_discipline = WebService::Solr::Field->new( 'facet_discipline' => $discipline );
-	my $solr_fulltext         = WebService::Solr::Field->new( 'fulltext'         => $fulltext );
-	my $solr_gid              = WebService::Solr::Field->new( 'gid'              => $gid );
-	my $solr_iid              = WebService::Solr::Field->new( 'iid'              => $iid );
-	my $solr_title            = WebService::Solr::Field->new( 'title'            => $title );
+	my $solr_abstract           = WebService::Solr::Field->new( 'abstract'           => $abstract );
+	my $solr_college            = WebService::Solr::Field->new( 'college'            => $college );
+	my $solr_creator            = WebService::Solr::Field->new( 'creator'            => $creator );
+	my $solr_date               = WebService::Solr::Field->new( 'date'               => $date );
+	my $solr_degree             = WebService::Solr::Field->new( 'degree'             => $degree );
+	my $solr_discipline         = WebService::Solr::Field->new( 'discipline'         => $discipline );
+	my $solr_facet_degree       = WebService::Solr::Field->new( 'facet_degree'       => $degree );
+	my $solr_facet_college      = WebService::Solr::Field->new( 'facet_college'      => $college );
+	my $solr_availability       = WebService::Solr::Field->new( 'availability'       => $availability );
+	my $solr_year               = WebService::Solr::Field->new( 'year'               => $year );
+	my $solr_facet_discipline   = WebService::Solr::Field->new( 'facet_discipline'   => $discipline );
+	my $solr_fulltext           = WebService::Solr::Field->new( 'fulltext'           => $fulltext );
+	my $solr_gid                = WebService::Solr::Field->new( 'gid'                => $gid );
+	my $solr_iid                = WebService::Solr::Field->new( 'iid'                => $iid );
+	my $solr_title              = WebService::Solr::Field->new( 'title'              => $title );
 
 	# add simple fields
 	my $doc = WebService::Solr::Document->new;
-	$doc->add_fields( $solr_iid,  $solr_gid, $solr_creator, $solr_title, $solr_date, $solr_abstract, $solr_fulltext, $solr_college, $solr_degree, $solr_discipline, $solr_facet_discipline, $solr_facet_degree );
+	$doc->add_fields( $solr_iid,  $solr_gid, $solr_creator, $solr_title, $solr_date, $solr_abstract, $solr_fulltext, $solr_college, $solr_degree, $solr_discipline, $solr_facet_discipline, $solr_facet_degree, $solr_availability, $solr_year, $solr_facet_college );
 
 	# add complex fields
 	foreach ( @subjects )     { $doc->add_fields(( WebService::Solr::Field->new( 'subject'           => $_ ))) }

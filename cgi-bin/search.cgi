@@ -4,17 +4,18 @@
 
 # Eric Lease Morgan <emorgan@nd.edu>
 # January 21, 2020 - first cut for this instance
+# January 22, 2020 - added many facets
 
 
 # configure
-use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline' );
+use constant FACETFIELD => ( 'facet_subject', 'facet_contributor', 'facet_degree', 'facet_discipline', 'year', 'availability', 'facet_college' );
 use constant SOLR       => 'http://localhost:8983/solr/etds';
 use constant TXT        => 'txt';
 use constant PDF        => 'pdf';
 use constant PREFIX     => 'und:';
 use constant FILESYSTEM => '/afs/crc.nd.edu/user/e/emorgan/local/html/etds';
 use constant HTTP       => 'http://cds.crc.nd.edu/etds';
-use constant ROWS       => 499;
+use constant ROWS       => 199;
 
 # require
 use CGI;
@@ -106,6 +107,39 @@ else {
 		
 	}
 
+	# build a list of year facets
+	my @facet_year = ();
+	my $year_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ year } );
+	foreach my $facet ( sort { $$year_facets{ $b } <=> $$year_facets{ $a } } keys %$year_facets ) {
+	
+		my $encoded = uri_encode( $facet );
+		my $link = qq(<a href='/etds/cgi-bin/search.cgi?query=$sanitized AND year:"$encoded"'>$facet</a>);
+		push @facet_year, $link . ' (' . $$year_facets{ $facet } . ')';
+		
+	}
+
+	# build a list of availability facets
+	my @facet_availability = ();
+	my $availability_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ availability } );
+	foreach my $facet ( sort { $$availability_facets{ $b } <=> $$availability_facets{ $a } } keys %$availability_facets ) {
+	
+		my $encoded = uri_encode( $facet );
+		my $link = qq(<a href='/etds/cgi-bin/search.cgi?query=$sanitized AND availability:"$encoded"'>$facet</a>);
+		push @facet_availability, $link . ' (' . $$availability_facets{ $facet } . ')';
+		
+	}
+
+	# build a list of colleges facets
+	my @facet_college = ();
+	my $college_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_college } );
+	foreach my $facet ( sort { $$college_facets{ $b } <=> $$college_facets{ $a } } keys %$college_facets ) {
+	
+		my $encoded = uri_encode( $facet );
+		my $link = qq(<a href='/etds/cgi-bin/search.cgi?query=$sanitized AND college:"$encoded"'>$facet</a>);
+		push @facet_college, $link . ' (' . $$college_facets{ $facet } . ')';
+		
+	}
+
 	# get the total number of hits
 	my $total = $response->content->{ 'response' }->{ 'numFound' };
 
@@ -124,7 +158,7 @@ else {
 		my $abstract     = $doc->value_for(  'abstract' );
 		my $degree       = $doc->value_for(  'degree' );
 		my $discipline   = $doc->value_for(  'discipline' );
-		my $department   = $doc->value_for(  'department' );
+		my $college      = $doc->value_for(  'college' );
 		
 		# update the list of dids
 		push( @gids, $gid );
@@ -166,11 +200,12 @@ else {
 		$pdfurl    =~ s/$prefix//;
 		
 		# create a item
-		my $item = &item( $title, $creator, $date, scalar( @subjects ), scalar( @contributors ), $txturl, $pdfurl, $degree, $discipline );
+		my $item = &item( $title, $creator, $date, scalar( @subjects ), scalar( @contributors ), $txturl, $pdfurl, $degree, $discipline, $college );
 		$item =~ s/##TITLE##/$title/g;
 		$item =~ s/##CREATOR##/$creator/eg;
 		$item =~ s/##DATE##/$date/eg;
 		$item =~ s/##DISCIPLINE##/$discipline/eg;
+		$item =~ s/##COLLEGE##/$college/eg;
 		$item =~ s/##DEGREE##/$degree/eg;
 		$item =~ s/##DATE##/$date/eg;
 		$item =~ s/##SUBJECTS##/$subjects/eg;
@@ -198,6 +233,9 @@ else {
 	$html =~ s/##FACETSCONTRIBUTOR##/join( '; ', @facet_contributor )/e;
 	$html =~ s/##FACETSDEGREE##/join( '; ', @facet_degree )/e;
 	$html =~ s/##FACETSDISCIPLINE##/join( '; ', @facet_discipline )/e;
+	$html =~ s/##FACETSYEAR##/join( '; ', @facet_year )/e;
+	$html =~ s/##FACETSAVAILABILITY##/join( '; ', @facet_availability )/e;
+	$html =~ s/##FACETSCOLLEGE##/join( '; ', @facet_college )/e;
 	$html =~ s/##ITEMS##/$items/e;
 
 }
@@ -233,7 +271,8 @@ sub get_facets {
 sub results {
 
 	return <<EOF
-	<p>Your search found ##TOTAL## item(s) and ##HITS## item(s) are displayed. ##ID2URLS##</p>
+	<p>Your search found ##TOTAL## item(s) and ##HITS## item(s) are displayed.</p>
+	</p>##ID2URLS##</p>
 		
 	<h3>Items</h3><ol>##ITEMS##</ol>
 EOF
@@ -253,9 +292,11 @@ sub item {
 	my $pdfurl          = shift;
 	my $degree          = shift;
 	my $discipline      = shift;
+	my $college         = shift;
 	my $item            = "<li class='item'><span class='title'>##TITLE##</span><ul>";
 	if ( $author )       { $item .= "<li style='list-style-type:circle'><b>author:</b> ##CREATOR##</li>" }
 	if ( $degree )       { $item .= "<li style='list-style-type:circle'><b>degree:</b> ##DEGREE##</li>" }
+	if ( $college )      { $item .= "<li style='list-style-type:circle'><b>college:</b> ##COLLEGE##</li>" }
 	if ( $discipline )   { $item .= "<li style='list-style-type:circle'><b>discipline:</b> ##DISCIPLINE##</li>" }
 	if ( $date )         { $item .= "<li style='list-style-type:circle'><b>date:</b> ##DATE##</li>" }
 	if ( $subjects )     { $item .= "<li style='list-style-type:circle'><b>subject(s):</b> ##SUBJECTS##</li>" }
@@ -360,10 +401,13 @@ sub results_template {
 	</div>
 	
 	<div class="col-3 col-m-3">
-	<h3>Discipline facets</h3><p>##FACETSDISCIPLINE##</p>
-	<h3>Degree facets</h3><p>##FACETSDEGREE##</p>
-	<h3>Subject facets</h3><p>##FACETSSUBJECT##</p>
-	<h3>Contributor facets</h3><p>##FACETSCONTRIBUTOR##</p>
+		<h3>College, school, & institute facets</h3><p>##FACETSCOLLEGE##</p>
+		<h3>Discipline facets</h3><p>##FACETSDISCIPLINE##</p>
+		<h3>Year facets</h3><p>##FACETSYEAR##</p>
+		<h3>Degree facets</h3><p>##FACETSDEGREE##</p>
+		<h3>Availability facets</h3><p>##FACETSAVAILABILITY##</p>
+		<h3>Subject facets</h3><p>##FACETSSUBJECT##</p>
+		<h3>Contributor facets</h3><p>##FACETSCONTRIBUTOR##</p>
 	</div>
 
 </body>
@@ -375,7 +419,7 @@ EOF
 sub ids2urls {
 
 	return <<EOF
-(<a href="/etds/cgi-bin/gids2urls.cgi?type=txt&gids=##IDS##">List URLs to available plain text files</a> <a href="/etds/cgi-bin/gids2urls.cgi?type=pdf&gids=##IDS##">List URLs to available PDF versions</a> )
+<a href="/etds/cgi-bin/gids2urls.cgi?type=txt&gids=##IDS##">List URLs to available plain text versions of documents</a>, or <a href="/etds/cgi-bin/gids2urls.cgi?type=pdf&gids=##IDS##">list URLs to available PDF versions</a>.
 EOF
 
 }

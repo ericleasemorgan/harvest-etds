@@ -8,17 +8,19 @@
 
 
 CREATE table etds (
-  eid         INTEGER PRIMARY KEY,
-  iid         TEXT,
-  model       TEXT,
-  creator     TEXT,
-  title       TEXT,
-  date        TEXT,
-  college     TEXT,
-  abstract    TEXT,
-  gid         TEXT,
-  degree      TEXT,
-  discipline  TEXT
+  eid           INTEGER PRIMARY KEY,
+  iid           TEXT,
+  model         TEXT,
+  creator       TEXT,
+  title         TEXT,
+  date          TEXT,
+  college       TEXT,
+  abstract      TEXT,
+  gid           TEXT,
+  degree        TEXT,
+  discipline    TEXT,
+  year          INT,
+  availability  TEXT
 );
 
 
