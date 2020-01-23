@@ -14,7 +14,10 @@
 ./bin/etd-harvest.pl > ./caches/tsv/etd-harvest.tsv
 ./bin/db-initialize.sh
 ./bin/etd-iid2gid.sh
+<<<<<<< HEAD
 ./bin/etd-addyear.sh 
+=======
+>>>>>>> 620f75937fecdaad25321db8d7d561192d4476b0
 ./bin/etd-download.sh
 find pdf -name '*.pdf' | parallel ./bin/file2txt.sh {}
 ./bin/etd-availability.sh
