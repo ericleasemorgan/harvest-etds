@@ -3,6 +3,8 @@
 # etd-harvest.pl - query CurateND's Solr instance and output a list of ETD metadata
 # usage: ./bin/etd-harvest.pl > ./caches/tsv/etd-harvest.tsv
 
+# consider the following QUERY for harvesting the Notre Dame graduation programs -- library_collections_tesim:"und:zp38w953h0s"
+
 
 # Eric Lease Morgan <emorgan@nd.edu>
 # March    5, 2019 - first investigations
